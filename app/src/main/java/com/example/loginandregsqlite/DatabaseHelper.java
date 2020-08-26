@@ -30,11 +30,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    // to insert data into the database
     public void insertUser(ContentValues contentValues){
         getWritableDatabase().insert( "user_information", "",contentValues);
     }
 
 
+    // checking whether the username and password matched or not
     public boolean isLoginValid(String username, String password){
         String sql = "Select count(*) from user_information where username='" + username + "' and password='" + password + "'";
         SQLiteStatement statement = getReadableDatabase().compileStatement(sql);
@@ -51,6 +53,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    // updating the password
     public boolean isNewPass(String username, String newPass){
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -65,17 +68,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    // checking whether the username is available or not
     public boolean isUsernameAvailable(String username){
         SQLiteDatabase db = this.getReadableDatabase();
 
         String sql = "Select username from user_information where username='" + username + "'";
-//        SQLiteStatement statement = getReadableDatabase().compileStatement(sql);
 
         Cursor cursor = db.rawQuery(sql, null);
-
-//        long l = statement.simpleQueryForLong();
-//        long l = statement;
-//        statement.close();
 
         if (cursor.getCount() <= 0 ){
             return false;

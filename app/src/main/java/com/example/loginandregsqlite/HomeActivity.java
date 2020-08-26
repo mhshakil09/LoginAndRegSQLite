@@ -42,24 +42,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
-                etNewPassValue = etNewPass.getText().toString();
-
-//                databaseHelper.isNewPass(tvUsernameValue, etNewPassValue);
-//                Toast.makeText(HomeActivity.this, "password changed successfully", Toast.LENGTH_SHORT).show();
-
-//                tvUserDetails.setText("username: '" + etNewPassValue + "' pass: '" + tvPasswordValue + "'");
-
-                if ( etNewPassValue.isEmpty() || etNewPassValue.equals(tvPasswordValue)){
-                    Toast.makeText(HomeActivity.this, "enter new password", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    databaseHelper.isNewPass(tvUsernameValue, etNewPassValue);
-                    Toast.makeText(HomeActivity.this, "password changed successfully", Toast.LENGTH_SHORT).show();
-                    sharedPref.savePassword(etNewPassValue, HomeActivity.this);
-                    tvPasswordValue = sharedPref.getPassword(HomeActivity.this).toString();
-                }
-                tvUserDetails.setText("username: '" + tvUsernameValue + "' pass: " + tvPasswordValue);
+                btnResetFunction();
 
             }
         });
@@ -71,9 +54,8 @@ public class HomeActivity extends AppCompatActivity {
 
                 Toast.makeText(HomeActivity.this, ("'" + tvUsernameValue + "' is Logging out!"), Toast.LENGTH_SHORT).show();
 
-//                sharedPref.saveUsername(" ", HomeActivity.this);
+                //resetting the shared password for ew login
                 sharedPref.savePassword(" ", HomeActivity.this);
-
 
                 Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
                 startActivity(intent);
@@ -81,6 +63,29 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    public void btnResetFunction(){
+
+        etNewPassValue = etNewPass.getText().toString();
+
+//                databaseHelper.isNewPass(tvUsernameValue, etNewPassValue);
+//                Toast.makeText(HomeActivity.this, "password changed successfully", Toast.LENGTH_SHORT).show();
+
+//                tvUserDetails.setText("username: '" + etNewPassValue + "' pass: '" + tvPasswordValue + "'");
+
+        // checking whether the input field is blank or not and also new password is eequal to old password or not
+        if ( etNewPassValue.isEmpty() || etNewPassValue.equals(tvPasswordValue)){
+            Toast.makeText(HomeActivity.this, "enter new password", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            databaseHelper.isNewPass(tvUsernameValue, etNewPassValue);
+            Toast.makeText(HomeActivity.this, "password changed successfully", Toast.LENGTH_SHORT).show();
+            sharedPref.savePassword(etNewPassValue, HomeActivity.this);
+            tvPasswordValue = sharedPref.getPassword(HomeActivity.this).toString();
+        }
+        tvUserDetails.setText("username: '" + tvUsernameValue + "' pass: " + tvPasswordValue);
 
     }
 

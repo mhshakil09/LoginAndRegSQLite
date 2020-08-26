@@ -30,15 +30,7 @@ public class LoginActivity extends AppCompatActivity {
 
         databaseHelper = new DatabaseHelper(this);
 
-//        if (sharedPref.getUsername(LoginActivity.this) != null || !sharedPref.getUsername(LoginActivity.this).equals("")){
-//            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-//            startActivity(intent);
-//            finish();
-//        }
-//        else {
-//
-//        }
-
+        // checking if user is logged in or not
         if (sharedPref.getUsername(LoginActivity.this) != null && !sharedPref.getUsername(LoginActivity.this).equals(" ") &&
         !sharedPref.getPassword(LoginActivity.this).equals(" ")){
             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
@@ -46,41 +38,23 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
 
+        // showing username to shared pref after logged out
         if (!sharedPref.getUsername(LoginActivity.this).equals(" ") && sharedPref.getPassword(LoginActivity.this) != null){
             etUsername.setText(sharedPref.getUsername(LoginActivity.this).toString());
         }
 
 
-
+        // user Login function is called
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               String etUsernameValue = etUsername.getText().toString();
-               String etPasswordValue = etPassword.getText().toString();
 
-                if (databaseHelper.isLoginValid(etUsernameValue, etPasswordValue)){
-
-                    sharedPref.saveUsername(etUsernameValue, LoginActivity.this);
-                    sharedPref.savePassword(etPasswordValue, LoginActivity.this);
-
-                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                    finish();
-
-                    Toast.makeText(LoginActivity.this, "Logged in successful.", Toast.LENGTH_SHORT).show();;
-
-
-
-                }
-                else {
-
-                    Toast.makeText(LoginActivity.this, "Invalid username or password!", Toast.LENGTH_SHORT).show();
-                }
-
+                btnLoginFunction();
 
             }
         });
 
+        // taking this activity to registration activity
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,9 +65,33 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-
-
-
     }
+
+
+    // function for checking and logging in user
+    public void btnLoginFunction(){
+
+        String etUsernameValue = etUsername.getText().toString();
+        String etPasswordValue = etPassword.getText().toString();
+
+
+        //checking whether the login credentials are in the database or not
+        if (databaseHelper.isLoginValid(etUsernameValue, etPasswordValue)){
+            sharedPref.saveUsername(etUsernameValue, LoginActivity.this);
+            sharedPref.savePassword(etPasswordValue, LoginActivity.this);
+
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            startActivity(intent);
+            finish();
+
+            Toast.makeText(LoginActivity.this, "Logged in successful.", Toast.LENGTH_SHORT).show();;
+
+        }
+        else {
+
+            Toast.makeText(LoginActivity.this, "Invalid username or password!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
 }

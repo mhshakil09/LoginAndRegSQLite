@@ -2,6 +2,7 @@ package com.example.loginandregsqlite;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
@@ -68,16 +69,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String sql = "Select username from user_information where username='" + username + "'";
-        SQLiteStatement statement = getReadableDatabase().compileStatement(sql);
+//        SQLiteStatement statement = getReadableDatabase().compileStatement(sql);
 
-        long l = statement.simpleQueryForLong();
-        statement.close();
+        Cursor cursor = db.rawQuery(sql, null);
 
-        if (l == 1){
-            return true;
+//        long l = statement.simpleQueryForLong();
+//        long l = statement;
+//        statement.close();
+
+        if (cursor.getCount() <= 0 ){
+            return false;
         }
         else {
-            return false;
+            return true;
         }
 
     }

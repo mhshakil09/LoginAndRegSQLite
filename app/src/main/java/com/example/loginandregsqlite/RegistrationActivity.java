@@ -82,7 +82,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 contentValues.put("dob", etDobValue);
                 contentValues.put("country", etCountryValue);
 
-                // inserting data to the database using ContentvValues
+                // inserting data to the database using ContentValues
                 databaseHelper.insertUser(contentValues);
 
                 Toast.makeText(RegistrationActivity.this, "Registration complete", Toast.LENGTH_SHORT).show();

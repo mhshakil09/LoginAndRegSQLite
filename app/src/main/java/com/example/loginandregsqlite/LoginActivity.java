@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         // showing username to shared pref after logged out
-        if (!sharedPref.getUsername(LoginActivity.this).equals(" ") && sharedPref.getPassword(LoginActivity.this) != null){
+        if (sharedPref.getUsername(LoginActivity.this) != null && sharedPref.getPassword(LoginActivity.this).equals(" ")){
             etUsername.setText(sharedPref.getUsername(LoginActivity.this).toString());
         }
 
